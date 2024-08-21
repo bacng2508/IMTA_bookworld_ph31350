@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Spatie\FlareClient\View;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +15,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    // return view('welcome');
+    // return view('admin.layouts.admin_master');
+    // return view('admin.genres.index');
+    // return view('admin.genres.create');
+    // return view('admin.genres.edit');
+    return view('admin.auth.reset-password');
 });
