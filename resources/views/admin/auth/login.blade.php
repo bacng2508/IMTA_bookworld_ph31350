@@ -35,7 +35,7 @@
                 @session('success')
                     <p class="text-success text-center mb-2">{{session('success')}}</p>
                 @endsession
-                <form action="" method="POST">
+                <form action="{{ route('admin.login') }}" method="POST">
                     @csrf
                     <div class="mb-3">
                         <div class="input-group">

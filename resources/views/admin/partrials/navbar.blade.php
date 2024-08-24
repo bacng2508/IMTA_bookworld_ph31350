@@ -126,26 +126,24 @@
                 <button class="border-0 rounded p-2" style="background-color: rgb(243, 243, 243);" type="button" data-toggle="dropdown"
                     aria-expanded="false">
                     <div class="d-flex align-items-center">
-                        {{-- <img src="{{ asset('storage/'.Auth::guard('administrator')->user()->avatar)}}" width="35px;"> --}}
-                        <img src="" width="35px;">
-                        {{-- <p class="mb-0 ml-2 d-flex align-items-center ">{{ Auth::guard('administrator')->user()->name }} <i class="fa-solid fa-sort-down ml-2 pb-1"></i></p> --}}
-                        <p class="mb-0 ml-2 d-flex align-items-center "><i class="fa-solid fa-sort-down ml-2 pb-1"></i></p>
+                        <img src="{{ Storage::url(Auth::guard('administrator')->user()->avatar) }}" width="35px;">
+                        <p class="mb-0 ml-2 d-flex align-items-center ">{{ Auth::guard('administrator')->user()->name }}<i class="fa-solid fa-sort-down ml-2 pb-1"></i></p>
                     </div>
                 </button>
                 <div class="dropdown-menu p-0 rounded-0 mr-3 border-0"
-                    style="position: absolute; top: 98%; left: -60px; width: 200px;"
+                    style="position: absolute; top: 98%; right: 0px; width: 180px;"
                     data-popper-placement="bottom-end">
                     <div class="card mb-0">
                         <div class="card-body p-0">
                             <div class="list-group rounded">
-                                <a href=""
+                                <a href="{{ route('admin.profile.edit') }}"
                                     class="list-group-item list-group-item-action border-0 py-2 px-3">
                                     <div class="d-inline-block text-end me-2" style="width: 25px">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </div>
                                     <span>Chỉnh sửa hồ sơ</span>
                                 </a>
-                                <a href=""
+                                <a href="{{ route('admin.profile.change-password') }}"
                                     class="list-group-item list-group-item-action border-0 py-2 px-3">
                                     <div class="d-inline-block text-end me-2" style="width: 25px">
                                         <i class="fa-solid fa-key"></i>
@@ -157,7 +155,7 @@
                                         <i class="fa-solid fa-arrow-right-from-bracket"></i>
                                     </div>
                                     <span>
-                                        <form method="POST" action="">
+                                        <form method="POST" action="{{ route('admin.logout') }}">
                                             @csrf
                                             <button class="border-0 bg-transparent" style="color: #495057" type="submit">Đăng xuất</button>
                                         </form>
