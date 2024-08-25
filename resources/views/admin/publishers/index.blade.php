@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin_master')
 
-@section('title', 'Danh sách danh mục')
+@section('title', 'Danh sách nhà xuất bản')
 
 @section('content')
     <section class="content">
@@ -22,30 +22,30 @@
                                         Tìm kiếm
                                     </button>
                                 </form>
-                                <a href="{{ route('admin.categories.create') }}" class="btn btn-primary ">
+                                <a href="{{ route('admin.publishers.create') }}" class="btn btn-primary ">
                                     <i class="fa-solid fa-plus mr-2"></i>
-                                    Thêm danh mục
+                                    Thêm nhà xuất bản
                                 </a>
                             </div>
                             <table id="example2" class="table table-bordered table-hover mb-3">
                                 <thead class="text-center">
                                     <tr>
                                         <th width="15%">#</th>
-                                        <th width="35%">Tên danh mục</th>
+                                        <th width="35%">Tên nhà xuất bản</th>
                                         <th width="15%">Hành động</th>
                                     </tr>
                                 </thead>
                                 <tbody class="text-center">
-                                    @foreach ($categories as $key => $category)
+                                    @foreach ($publishers as $key => $publisher)
                                         <tr>
                                             <td style="vertical-align: middle;">{{ $key + 1 }}</td>
-                                            <td style="vertical-align: middle;">{{ $category->name }}</td>
+                                            <td style="vertical-align: middle;">{{ $publisher->name }}</td>
                                             <td class="text-center" style="vertical-align: middle;">
                                                 <div class="d-flex justify-content-center">
-                                                    <a href="{{ route('admin.categories.edit', $category) }}"
+                                                    <a href="{{ route('admin.publishers.edit', $publisher) }}"
                                                         class="btn btn-warning mr-1">Sửa</a>
                                                     <form method="POST"
-                                                        action="{{ route('admin.categories.destroy', $category) }}">
+                                                        action="{{ route('admin.publishers.destroy', $publisher) }}">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button class="btn btn-danger deleteItemBtn"
@@ -59,12 +59,10 @@
                             </table>
 
                             <div class="d-flex justify-content-end">
-                                {{ $categories->links() }}
+                                {{ $publishers->links() }}
                             </div>
                         </div>
                         <!-- /.card-body -->
-
-
                     </div>
                     <!-- /.card -->
 

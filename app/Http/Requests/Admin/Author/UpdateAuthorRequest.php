@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Admin\Category;
+namespace App\Http\Requests\Admin\Author;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateCategoryRequest extends FormRequest
+class UpdateAuthorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,16 +22,16 @@ class UpdateCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => "required|unique:categories,name,".$this->category->id,
-            'slug' => "required|unique:categories,slug,".$this->category->id
+            'name' => "required|unique:authors,name,".$this->author->id,
+            'slug' => "required|unique:authors,slug,".$this->author->id
         ];
     }
 
     public function messages(): array
     {
         return [
-            'name.required' => 'Không được để trống tên danh mục',
-            'name.unique' => 'Danh mục đã tồn tại, vui lòng nhập tên khác',
+            'name.required' => 'Không được để trống Tác giả',
+            'name.unique' => 'Tác giả đã tồn tại, vui lòng nhập tên khác',
             'slug.required' => 'Không được để trống slug',
             'slug.unique' => 'Slug đã tồn tại, vui lòng nhập tên khác'
         ];

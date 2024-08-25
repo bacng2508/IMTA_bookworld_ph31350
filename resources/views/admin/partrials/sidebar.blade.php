@@ -15,7 +15,8 @@
                     alt="User Image">
             </div>
             <div class="info pl-3">
-                <span class="d-block text-white font-weight-bold" style="font-size: 20px;">{{ Auth::guard('administrator')->user()->name }}</span>
+                <span class="d-block text-white font-weight-bold"
+                    style="font-size: 20px;">{{ Auth::guard('administrator')->user()->name }}</span>
                 {{-- <span class="d-block text-white font-weight-bold" style="font-size: 20px;"></span> --}}
                 <div class="">
                     {{-- @foreach (Auth::guard('administrator')->user()->roles as $role)
@@ -63,28 +64,69 @@
                         </li>
                     </ul>
                 </li>
-
-
-
                 <li class="nav-item sidebar-nav">
-                    <a href="#" class="nav-link ">
-                        <i class="nav-icon fa-regular fa-bookmark mr-2"></i>
+                    <a href="" class="nav-link ">
+                        <i class="nav-icon fa-solid fa-list mr-2"></i>
                         <p>
-                            Quản lý thương hiệu
+                            Quản lý tác giả
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="" class="nav-link">
-                                <p>Danh sách thương hiệu</p>
+                            <a href="{{ route('admin.authors.index') }}" class="nav-link">
+                                <p>Danh sách tác giả</p>
                             </a>
                         </li>
-                        <li class="nav-item sidebar-nav">
-                            <a href="" class="nav-link">
-                                <p>Thêm thương hiệu</p>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.authors.create') }}" class="nav-link">
+                                <p>Thêm tác giả</p>
                             </a>
                         </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item sidebar-nav">
+                    <a href="" class="nav-link ">
+                        <i class="nav-icon fa-solid fa-list mr-2"></i>
+                        <p>
+                            Quản lý nhà xuất bản
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.publishers.index') }}" class="nav-link">
+                                <p>Danh sách nhà xuất bản</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.publishers.create') }}" class="nav-link">
+                                <p>Thêm nhà xuất bản</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item sidebar-nav">
+                    <a href="" class="nav-link ">
+                        <i class="nav-icon fa-solid fa-list mr-2"></i>
+                        <p>
+                            Quản lý sách
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.books.index') }}" class="nav-link">
+                                <p>Danh sách sách</p>
+                            </a>
+                        </li>
+                        {{-- <li class="nav-item">
+                            <a href="{{ route('admin.publishers.create') }}" class="nav-link">
+                                <p>Thêm sách</p>
+                            </a>
+                        </li> --}}
                     </ul>
                 </li>
             </ul>

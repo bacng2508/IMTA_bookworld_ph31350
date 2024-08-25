@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin_master')
 
-@section('title', 'Danh sách danh mục')
+@section('title', 'Danh sách sách')
 
 @section('content')
     <section class="content">
@@ -22,30 +22,45 @@
                                         Tìm kiếm
                                     </button>
                                 </form>
-                                <a href="{{ route('admin.categories.create') }}" class="btn btn-primary ">
+                                <a href="{{ route('admin.books.create') }}" class="btn btn-primary ">
                                     <i class="fa-solid fa-plus mr-2"></i>
-                                    Thêm danh mục
+                                    Thêm sách
                                 </a>
                             </div>
                             <table id="example2" class="table table-bordered table-hover mb-3">
                                 <thead class="text-center">
                                     <tr>
-                                        <th width="15%">#</th>
-                                        <th width="35%">Tên danh mục</th>
+                                        <th width="5%">#</th>
+                                        <th width="">Tên sách</th>
+                                        <th width="">Hình ảnh</th>
+                                        <th width="">Giá</th>
+                                        <th width="">Danh mục</th>
                                         <th width="15%">Hành động</th>
                                     </tr>
                                 </thead>
                                 <tbody class="text-center">
-                                    @foreach ($categories as $key => $category)
+                                    @foreach ($books as $key => $book)
                                         <tr>
                                             <td style="vertical-align: middle;">{{ $key + 1 }}</td>
-                                            <td style="vertical-align: middle;">{{ $category->name }}</td>
+                                            <td style="vertical-align: middle;">{{ $book->name }}</td>
+                                            <td style="vertical-align: middle;">
+                                                <img src="{{ Storage::url($book->cover_image) }}" alt="" width="50px">
+                                            </td>
+                                            <td style="vertical-align: middle;">
+                                                @if ($book->price_sale != 0)
+                                                    <p style="text-decoration: line-through" class="mb-0">{{ number_format($book->price) }}</p>
+                                                    <p class="text-danger mb-0">{{ number_format($book->price_sale) }}</p>
+                                                @else
+                                                    <p class="mb-0">{{ number_format($book->price) }}</p>
+                                                @endif
+                                            </td>
+                                            <td style="vertical-align: middle;">{{ $book->category->name }}</td>
                                             <td class="text-center" style="vertical-align: middle;">
                                                 <div class="d-flex justify-content-center">
-                                                    <a href="{{ route('admin.categories.edit', $category) }}"
+                                                    <a href="{{ route('admin.books.edit', $book) }}"
                                                         class="btn btn-warning mr-1">Sửa</a>
                                                     <form method="POST"
-                                                        action="{{ route('admin.categories.destroy', $category) }}">
+                                                        action="{{ route('admin.books.destroy', $book) }}">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button class="btn btn-danger deleteItemBtn"
@@ -59,7 +74,7 @@
                             </table>
 
                             <div class="d-flex justify-content-end">
-                                {{ $categories->links() }}
+                                {{ $books->links() }}
                             </div>
                         </div>
                         <!-- /.card-body -->

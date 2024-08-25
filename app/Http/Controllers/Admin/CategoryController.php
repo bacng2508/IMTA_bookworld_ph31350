@@ -11,7 +11,7 @@ use App\Http\Requests\Admin\Category\UpdateCategoryRequest;
 class CategoryController extends Controller
 {
     public function index() {
-        $categories = Category::all();
+        $categories = Category::latest()->paginate(10);
         return view('admin.categories.index', compact('categories'));
     }
 
@@ -35,29 +35,20 @@ class CategoryController extends Controller
     }
 
     public function update(Category $category, UpdateCategoryRequest $request) {
-        // $request->validate(
-        //     [
-        //         'name' => "required|unique:categories,name,$category->id",
-        //         'slug' => "required|unique:categories,slug,$category->id"
-        //     ],
-        //     [
-        //         'name.required' => 'Không được để trống tên danh mục',
-        //         'name.unique' => 'Danh mục đã tồn tại, vui lòng nhập tên khác',
-        //         'slug.required' => 'Không được để trống slug',
-        //         'slug.unique' => 'Slug đã tồn tại, vui lòng nhập tên khác'
-        //     ]
-        // );
-
         $category->update([
             'name' => $request->input('name'),
             'slug' => $request->input('slug')
         ]);
 
-        return back()->with('msg', 'Cập nhật danh mục thành công');
+        return back()
+            ->with('msg_type', 'success')
+            ->with('msg', 'Cập nhật danh mục thành công');
     }
 
     public function destroy(Category $category) {
         $category->delete();
-        return redirect()->route('admin.categories.index')->with('msg', 'Xóa danh mục thành công');
+        return redirect()->route('admin.categories.index')
+                        ->with('msg_type', 'success')
+                        ->with('msg', 'Xóa danh mục thành công');
     }
 }

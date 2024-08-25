@@ -23,7 +23,7 @@ class StoreCategoryRequest extends FormRequest
     {
         return [
             'name' => 'required|unique:categories,name',
-            'slug' => 'required'
+            'slug' => 'required|unique:categories,slug'
         ];
     }
 
@@ -32,7 +32,8 @@ class StoreCategoryRequest extends FormRequest
         return [
             'name.required' => 'Không được để trống tên danh mục',
             'name.unique' => 'Danh mục đã tồn tại, vui lòng nhập tên khác',
-            'slug.required' => 'Không được để trống slug'
+            'slug.required' => 'Không được để trống slug',
+            'name.unique' => 'Slug đã tồn tại, vui lòng nhập slug khác',
         ];
     }
 }
