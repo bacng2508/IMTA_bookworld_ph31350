@@ -2,53 +2,74 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Book;
+use App\Models\Author;
+use App\Models\Category;
+use App\Models\Publisher;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Admin\Book\StoreBookRequest;
 use App\Http\Requests\Admin\Book\UpdateBookRequest;
-use App\Models\Book;
-use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         $books = Book::with('category')->latest()->paginate(10);
         return view('admin.books.index', compact('books'));
     }
 
-    public function create() {
-        // return view('admin.publishers.create');
+    public function create()
+    {
+        $authors = Author::all();
+        $publishers = Publisher::all();
+        $categories = Category::all();
+        return view('admin.books.create', compact('authors', 'publishers', 'categories'));
     }
 
-    public function store(StoreBookRequest $request) {
-        // Publisher::create([
-        //     'name' => $request->input('name'),
-        //     'slug' => $request->input('slug')
-        // ]);
+    public function store(StoreBookRequest $request)
+    {
+        $data = $request->validated();
 
-        // return redirect()->route('admin.publishers.index')
-            // ->with('msg_type', 'success')
-            // ->with('msg', 'Thêm nhà xuất bản thành công');
+        if ($request->hasFile('cover_image')) {
+            $coverImagePath = $request->file('cover_image')->store('upload/book/cover-image', 'public');
+        }
+
+        $data['cover_image'] = $coverImagePath;
+
+        Book::create($data);
+
+        return redirect()->route('admin.books.index')
+            ->with('msg_type', 'success')
+            ->with('msg', 'Thêm nhà sách thành công');
     }
 
-    public function edit(Book $book) {
+    public function edit(Book $book)
+    {
         // return view('admin.publishers.edit', compact('publisher'));
     }
 
-    public function update(Book $book, UpdateBookRequest $request) {
+    public function update(Book $book, UpdateBookRequest $request)
+    {
         // $publisher->update([
         //     'name' => $request->input('name'),
         //     'slug' => $request->input('slug')
         // ]);
 
         // return back()
-            // ->with('msg_type', 'success')
-            // ->with('msg', 'Cập nhật nhà xuất bản thành công');
+        // ->with('msg_type', 'success')
+        // ->with('msg', 'Cập nhật nhà xuất bản thành công');
     }
 
-    public function destroy(Book $book) {
-        // $publisher->delete();
-        // return redirect()->route('admin.publishers.index')
-        //                 ->with('msg_type', 'success')
-        //                 ->with('msg', 'Xóa danh mục thành công');
+    public function destroy(Book $book)
+    {
+        if ($book->cover_image != 'upload/book/cover-image/default-cover-image.jpg') {
+            Storage::disk('public')->delete($book->cover_image);
+        }
+        $book->delete();
+        return redirect()->route('admin.books.index')
+            ->with('msg_type', 'success')
+            ->with('msg', 'Xóa danh mục thành công');
     }
 }

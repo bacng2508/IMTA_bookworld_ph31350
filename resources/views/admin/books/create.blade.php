@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin_master')
 
-@section('title', 'Thêm tác giả')
+@section('title', 'Thêm sách')
 
 @section('content')
     <section class="content">
@@ -14,12 +14,12 @@
                                     nhập vào</p>
                             @endif
 
-                            <form class="" method="POST" action="{{ route('admin.authors.store') }}">
+                            <form class="" method="POST" action="{{ route('admin.books.store') }}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group">
-                                    <label for="name">Tên tác giả</label>
+                                    <label for="name">Tên sách</label>
                                     <input type="text" class="form-control" name="name" id="name" value="{{old('name')}}"
-                                        placeholder="Nhập tên tác giả">
+                                        placeholder="Nhập tên sách">
                                     @error('name')
                                         <div class="form-text text-danger">{{ $message }}</div>
                                     @enderror
@@ -32,8 +32,87 @@
                                         <div class="form-text text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+                                <div class="form-group">
+                                    <label for="cover_image">Ảnh bìa</label>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="cover_image" name="cover_image">
+                                            <label class="custom-file-label" for="cover_image">Chọn ảnh</label>
+                                        </div>
+                                    </div>
+                                    @error('cover_image')
+                                        <div class="form-text text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="description">Mô tả</label>
+                                    <textarea name="description" class="form-control" id="description" cols="30" rows="5"></textarea>
+                                    @error('description')
+                                        <div class="form-text text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="price">Giá</label>
+                                    <input type="text" class="form-control" name="price" id="price" value="{{old('price')}}"
+                                        placeholder="Nhập giá">
+                                    @error('price')
+                                        <div class="form-text text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="price_sale">Giá khuyến mãi</label>
+                                    <input type="text" class="form-control" name="price_sale" id="price_sale" value="{{old('price_sale')}}"
+                                        placeholder="Nhập giá khuyến mãi">
+                                    @error('price_sale')
+                                        <div class="form-text text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="author_id">Tác giả</label>
+                                    <select class="form-control" name="author_id" id="author_id">
+                                        <option value="">Chọn tác giả</option>
+                                        @foreach ($authors as $author)
+                                            <option value="{{ $author->id }}" {{ old('author_id') == $author->id ? 'selected' : false }}>{{ $author->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('author_id')
+                                        <div class="form-text text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="publisher_id">Nhà xuất bản</label>
+                                    <select class="form-control" name="publisher_id" id="publisher_id">
+                                        <option value="">Chọn nhà xuất bản</option>
+                                        @foreach ($publishers as $publisher)
+                                            <option value="{{ $publisher->id }}" {{ old('publisher_id') == $publisher->id ? 'selected' : false }}>{{ $publisher->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('publisher_id')
+                                        <div class="form-text text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="category_id">Danh mục</label>
+                                    <select class="form-control" name="category_id" id="category_id">
+                                        <option value="">Chọn danh mục</option>
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : false }}>{{ $category->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('category_id')
+                                        <div class="form-text text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="stock">Số lượng</label>
+                                    <input type="text" class="form-control" name="stock" id="stock" value="{{old('stock')}}"
+                                        placeholder="Nhập số lượng">
+                                    @error('stock')
+                                        <div class="form-text text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
                                 <div class="text-right">
-                                    <button type="submit" class="btn btn-primary">Thêm tác giả</button>
+                                    <button type="submit" class="btn btn-primary">Thêm sách</button>
                                 </div>
                                 <!-- /.card-body -->
                             </form>
