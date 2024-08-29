@@ -47,19 +47,29 @@ class BookController extends Controller
 
     public function edit(Book $book)
     {
-        // return view('admin.publishers.edit', compact('publisher'));
+        $authors = Author::all();
+        $publishers = Publisher::all();
+        $categories = Category::all();
+        return view('admin.books.edit', compact('book', 'authors', 'publishers', 'categories'));
     }
 
     public function update(Book $book, UpdateBookRequest $request)
     {
-        // $publisher->update([
-        //     'name' => $request->input('name'),
-        //     'slug' => $request->input('slug')
-        // ]);
+        $data = $request->validated();
 
-        // return back()
-        // ->with('msg_type', 'success')
-        // ->with('msg', 'Cập nhật nhà xuất bản thành công');
+        if ($request->hasFile('cover_image')) {
+            if ($book->cover_image != 'upload/book/cover-image/default-cover-image.jpg') {
+                Storage::disk('public')->delete($book->cover_image);
+            }
+            $coverImagePath = $request->file('cover_image')->store('upload/book/cover-image', 'public');
+            $data['cover_image'] = $coverImagePath;
+        }
+
+        $book->update($data);
+
+        return back()
+            ->with('msg_type', 'success')
+            ->with('msg', 'Cập nhật sách thành công');
     }
 
     public function destroy(Book $book)

@@ -122,11 +122,33 @@
                                 <p>Danh sách sách</p>
                             </a>
                         </li>
-                        {{-- <li class="nav-item">
-                            <a href="{{ route('admin.publishers.create') }}" class="nav-link">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.books.create') }}" class="nav-link">
                                 <p>Thêm sách</p>
                             </a>
-                        </li> --}}
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item sidebar-nav">
+                    <a href="" class="nav-link ">
+                        <i class="nav-icon fa-solid fa-list mr-2"></i>
+                        <p>
+                            Quản lý khách hàng
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.users.index') }}" class="nav-link">
+                                <p>Danh sách khách hàng</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.users.create') }}" class="nav-link">
+                                <p>Thêm khách hàng</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
             </ul>

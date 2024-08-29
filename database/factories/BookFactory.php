@@ -22,7 +22,7 @@ class BookFactory extends Factory
     {
         $bookName = fake()->name;
         return [
-            'name' => fake()->name,
+            'name' => $bookName,
             'slug' => Str::slug($bookName, "-"),
             'cover_image' => 'upload/book/cover-image/default-cover-image.jpg',
             'description' => fake()->sentence(),

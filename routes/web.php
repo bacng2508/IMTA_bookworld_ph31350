@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\BookController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\PublisherController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 use Spatie\FlareClient\View;
 
@@ -22,7 +23,7 @@ use Spatie\FlareClient\View;
 */
 
 // Route::get('/', function () {
-    
+
 // });
 
 
@@ -85,5 +86,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::get('/{book}/edit', [BookController::class, 'edit'])->name('edit');
         Route::patch('/{book}', [BookController::class, 'update'])->name('update');
         Route::delete('/{book}', [BookController::class, 'destroy'])->name('destroy');
+    });
+
+    //User
+    Route::group(['prefix' => 'users', 'as' => 'users.'], function () {
+        Route::get('/', [UserController::class, 'index'])->name('index');
+        Route::get('/create', [UserController::class, 'create'])->name('create');
+        Route::post('/', [UserController::class, 'store'])->name('store');
+        Route::get('/{user}/edit', [UserController::class, 'edit'])->name('edit');
+        Route::patch('/{user}', [UserController::class, 'update'])->name('update');
+        Route::delete('/{user}', [UserController::class, 'destroy'])->name('destroy');
     });
 });

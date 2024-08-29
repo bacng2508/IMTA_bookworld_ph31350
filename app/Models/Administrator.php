@@ -16,7 +16,8 @@ class Administrator extends Authenticatable implements MustVerifyEmail
         'email',
         'avatar',
         'password',
-        'tel'
+        'tel',
+        'status'
     ];
 
     protected $hidden = [
