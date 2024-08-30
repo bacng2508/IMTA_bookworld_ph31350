@@ -22,9 +22,13 @@ use Spatie\FlareClient\View;
 |
 */
 
-// Route::get('/', function () {
+Route::get('/', function () {
+    return view('client.layouts.client_master');
+});
 
-// });
+Route::get('/home', function () {
+    return view('client.home');
+});
 
 
 // Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
