@@ -8,6 +8,9 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\PublisherController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Client\AuthController as ClientAuthController;
+use App\Http\Controllers\Client\HomeController;
+use App\Http\Controllers\Client\ProfileController as ClientProfileController;
 use Illuminate\Support\Facades\Route;
 use Spatie\FlareClient\View;
 
@@ -22,19 +25,66 @@ use Spatie\FlareClient\View;
 |
 */
 
-Route::get('/', function () {
-    return view('client.layouts.client_master');
-});
+// Route::get('/', function () {
+//     return view('client.layouts.client_master');
+// });
 
-Route::get('/home', function () {
-    return view('client.home');
-});
+// Route::get('/home', function () {
+//     return view('client.home');
+// });
+
+// Route::get('/product-detail', function () {
+//     return view('client.product-detail');
+// });
+
+// Route::get('/login', function () {
+//     return view('client.auth.login');
+// });
+
+// Route::get('/register', function () {
+//     return view('client.auth.register');
+// });
+
+// Route::get('/forgot-password', function () {
+//     return view('client.auth.forgot-password');
+// });
+
+// Route::get('/cart', function () {
+//     return view('client.cart');
+// });
+
+// Route::get('/check-out', function () {
+//     return view('client.check-out');
+// });
+
+// Route::get('/order-complete', function () {
+//     return view('client.order-complete');
+// });
+
+// Route::get('/my-account', function () {
+//     return view('client.profile.personal-infor');
+// });
 
 
 // Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 //     Route::get('/', [LoginController::class, 'login'])->name('login');
 //     Route::post('/', [LoginController::class, 'postLogin'])->name('login');
 // });
+
+
+Route::get('/', [HomeController::class, 'index'])->name('/');
+Route::get('sach/{book:slug}', [HomeController::class, 'show'])->name('book.show');
+
+
+Route::get('/login', [ClientAuthController::class, 'login'])->name('login');
+Route::post('/login', [ClientAuthController::class, 'postlogin'])->name('login');
+Route::get('/register', [ClientAuthController::class, 'register'])->name('register');
+Route::post('/register', [ClientAuthController::class, 'postRegister'])->name('register');
+Route::post('/logout', [ClientAuthController::class, 'logout'])->name('logout');
+
+Route::get('/profile', [ClientProfileController::class, 'index'])->name('profile.index');
+Route::get('/profile/my-orders', [ClientProfileController::class, 'myOrders'])->name('profile.myOrders');
+
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/', [AuthController::class, 'login'])->name('login');

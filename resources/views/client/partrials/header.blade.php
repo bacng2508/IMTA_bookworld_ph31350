@@ -3,8 +3,8 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-3 ">
-                    <a href="index.html" class="site-brand">
-                        <img src="{{asset('client/assets')}}/image/logo.png" alt="">
+                    <a href="{{ route('/') }}" class="site-brand">
+                        <img src="{{ asset('client/assets') }}/image/logo.png" alt="">
                     </a>
                 </div>
                 <div class="col-lg-3">
@@ -22,8 +22,7 @@
                     <div class="main-navigation flex-lg-right">
                         <ul class="main-menu menu-right ">
                             <li class="menu-item has-children">
-                                <a href="javascript:void(0)">Home <i
-                                        class="fas fa-chevron-down dropdown-arrow"></i></a>
+                                <a href="javascript:void(0)">Home <i class="fas fa-chevron-down dropdown-arrow"></i></a>
                                 <ul class="sub-menu">
                                     <li> <a href="index.html">Home One</a></li>
                                     <li> <a href="index-2.html">Home Two</a></li>
@@ -34,8 +33,7 @@
                             </li>
                             <!-- Shop -->
                             <li class="menu-item has-children mega-menu">
-                                <a href="javascript:void(0)">shop <i
-                                        class="fas fa-chevron-down dropdown-arrow"></i></a>
+                                <a href="javascript:void(0)">shop <i class="fas fa-chevron-down dropdown-arrow"></i></a>
                                 <ul class="sub-menu four-column">
                                     <li class="cus-col-25">
                                         <h3 class="menu-title"><a href="javascript:void(0)">Shop Grid </a></h3>
@@ -100,8 +98,7 @@
                             </li>
                             <!-- Blog -->
                             <li class="menu-item has-children mega-menu">
-                                <a href="javascript:void(0)">Blog <i
-                                        class="fas fa-chevron-down dropdown-arrow"></i></a>
+                                <a href="javascript:void(0)">Blog <i class="fas fa-chevron-down dropdown-arrow"></i></a>
                                 <ul class="sub-menu three-column">
                                     <li class="cus-col-33">
                                         <h3 class="menu-title"><a href="javascript:void(0)">Blog Grid</a></h3>
@@ -143,12 +140,11 @@
     </div>
     <div class="header-bottom pb--10">
         <div class="container">
-            <div class="row align-items-center">
+            <div class="row align-items-center justify-content-between">
                 <div class="col-lg-3">
                     <nav class="category-nav   ">
                         <div>
-                            <a href="javascript:void(0)" class="category-trigger"><i
-                                    class="fa fa-bars"></i>Browse
+                            <a href="javascript:void(0)" class="category-trigger"><i class="fa fa-bars"></i>Browse
                                 categories</a>
                             <ul class="category-menu">
                                 <li class="cat-item has-children">
@@ -264,10 +260,42 @@
                 <div class="col-lg-4">
                     <div class="main-navigation flex-lg-right">
                         <div class="cart-widget">
-                            <div class="login-block">
-                                <a href="login-register.html" class="font-weight-bold">Login</a> <br>
-                                <span>or</span><a href="login-register.html">Register</a>
-                            </div>
+                            @guest
+                                <div class="login-block">
+                                    <div class="dropdown">
+                                        <button class="p-2 dropdown-toggle" type="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa-regular fa-user fs-4"></i>
+                                        </button>
+                                        <ul class="dropdown-menu rounded-0 py-0">
+                                            <li><a class="dropdown-item" href="{{ route('register') }}">Đăng ký</a></li>
+                                            <li><a class="dropdown-item" href="{{ route('login') }}">Đăng nhập</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            @endguest
+                            @auth
+                                <div class="login-block">
+                                    <div class="dropdown">
+                                        <button class="p-2 dropdown-toggle" type="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <img src="{{ Storage::url(Auth::user()->avatar) }}" alt="" class="rounded-circle" width="40px">
+                                        </button>
+                                        <ul class="dropdown-menu rounded-0 py-0">
+                                            <li><a class="dropdown-item" href="{{ route('profile.index') }}">Chỉnh sửa thông tin</a></li>
+                                            <li><a class="dropdown-item" href="">Sản phẩm yêu thích</a></li>
+                                            <li><a class="dropdown-item" href="{{ route('profile.myOrders') }}">Đơn hàng của tôi</a></li>
+                                            <li><a class="dropdown-item" href="">Đổi mật khẩu</a></li>
+                                            <li>
+                                                <form method="POST" action="{{ route('logout') }}" class="mb-0">
+                                                    @csrf
+                                                    <button class="dropdown-item" type="submit">Đăng xuất</button>
+                                                </form>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            @endauth
                             <div class="cart-block">
                                 <div class="cart-total">
                                     <span class="text-number">
@@ -285,7 +313,8 @@
                                     <div class=" single-cart-block ">
                                         <div class="cart-product">
                                             <a href="product-details.html" class="image">
-                                                <img src="{{asset('client/assets')}}/image/products/cart-product-1.jpg" alt="">
+                                                <img src="{{ asset('client/assets') }}/image/products/cart-product-1.jpg"
+                                                    alt="">
                                             </a>
                                             <div class="content">
                                                 <h3 class="title"><a href="product-details.html">Kodak PIXPRO
@@ -319,14 +348,13 @@
             <div class="row align-items-sm-end align-items-center">
                 <div class="col-md-4 col-7">
                     <a href="index.html" class="site-brand">
-                        <img src="{{asset('client/assets')}}/image/logo.png" alt="">
+                        <img src="{{ asset('client/assets') }}/image/logo.png" alt="">
                     </a>
                 </div>
                 <div class="col-md-5 order-3 order-md-2">
                     <nav class="category-nav   ">
                         <div>
-                            <a href="javascript:void(0)" class="category-trigger"><i
-                                    class="fa fa-bars"></i>Browse
+                            <a href="javascript:void(0)" class="category-trigger"><i class="fa fa-bars"></i>Browse
                                 categories</a>
                             <ul class="category-menu">
                                 <li class="cat-item has-children">
@@ -622,15 +650,14 @@
         <div class="row align-items-center">
             <div class="col-lg-4">
                 <a href="index.html" class="site-brand">
-                    <img src="{{asset('client/assets')}}/image/logo.png" alt="">
+                    <img src="{{ asset('client/assets') }}/image/logo.png" alt="">
                 </a>
             </div>
             <div class="col-lg-8">
                 <div class="main-navigation flex-lg-right">
                     <ul class="main-menu menu-right ">
                         <li class="menu-item has-children">
-                            <a href="javascript:void(0)">Home <i
-                                    class="fas fa-chevron-down dropdown-arrow"></i></a>
+                            <a href="javascript:void(0)">Home <i class="fas fa-chevron-down dropdown-arrow"></i></a>
                             <ul class="sub-menu">
                                 <li> <a href="index.html">Home One</a></li>
                                 <li> <a href="index-2.html">Home Two</a></li>
@@ -641,8 +668,7 @@
                         </li>
                         <!-- Shop -->
                         <li class="menu-item has-children mega-menu">
-                            <a href="javascript:void(0)">shop <i
-                                    class="fas fa-chevron-down dropdown-arrow"></i></a>
+                            <a href="javascript:void(0)">shop <i class="fas fa-chevron-down dropdown-arrow"></i></a>
                             <ul class="sub-menu four-column">
                                 <li class="cus-col-25">
                                     <h3 class="menu-title"><a href="javascript:void(0)">Shop Grid </a></h3>
@@ -688,8 +714,7 @@
                         </li>
                         <!-- Pages -->
                         <li class="menu-item has-children">
-                            <a href="javascript:void(0)">Pages <i
-                                    class="fas fa-chevron-down dropdown-arrow"></i></a>
+                            <a href="javascript:void(0)">Pages <i class="fas fa-chevron-down dropdown-arrow"></i></a>
                             <ul class="sub-menu">
                                 <li><a href="cart.html">Cart</a></li>
                                 <li><a href="checkout.html">Checkout</a></li>
@@ -704,8 +729,7 @@
                         </li>
                         <!-- Blog -->
                         <li class="menu-item has-children mega-menu">
-                            <a href="javascript:void(0)">Blog <i
-                                    class="fas fa-chevron-down dropdown-arrow"></i></a>
+                            <a href="javascript:void(0)">Blog <i class="fas fa-chevron-down dropdown-arrow"></i></a>
                             <ul class="sub-menu three-column">
                                 <li class="cus-col-33">
                                     <h3 class="menu-title"><a href="javascript:void(0)">Blog Grid</a></h3>

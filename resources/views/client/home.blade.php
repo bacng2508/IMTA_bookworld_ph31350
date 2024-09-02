@@ -1,5 +1,9 @@
 @extends('client.layouts.client_master')
 
+@push('styles')
+    
+@endpush
+
 @section('page-content')
     <!--=================================
         Hero Area
@@ -132,8 +136,8 @@
         </div>
     </section>
     <!--=================================
-                Home Slider Tab
-                ===================================== -->
+        Home Slider Tab
+    ===================================== -->
     <section class="section-padding">
         <h2 class="sr-only">Home Tab Slider Section</h2>
         <div class="container">
@@ -161,6 +165,8 @@
                         <span class="arrow-icon"></span>
                     </li>
                 </ul>
+
+                {{-- Featured Products Tab --}}
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane show active" id="shop" role="tabpanel" aria-labelledby="shop-tab">
                         <div class="product-slider multiple-row  slider-border-multiple-row  sb-slick-slider"
@@ -177,7 +183,51 @@
                             {"breakpoint":480, "settings": {"slidesToShow": 1} },
                             {"breakpoint":320, "settings": {"slidesToShow": 1} }
                         ]'>
-                            <div class="single-slide">
+                            @foreach ($books as $book)
+                                <div class="single-slide px-2">
+                                    <div class="product-card">
+                                        <div class="product-header">
+                                            <a href="#" class="author">
+                                                jpple
+                                            </a>
+                                            <h3><a href="product-details.html">{{ $book->name }}</a></h3>
+                                        </div>
+                                        <div class="product-card--body">
+                                            <div class="card-image">
+                                                <img src="{{ Storage::url($book->cover_image) }}" alt="">
+                                                <div class="hover-contents">
+                                                    <a href="{{ route('book.show', $book) }}" class="hover-image">
+                                                        <img src="{{ Storage::url($book->cover_image) }}"
+                                                            alt="">
+                                                    </a>
+                                                    <div class="hover-btns">
+                                                        <a href="cart.html" class="single-btn">
+                                                            <i class="fas fa-shopping-basket"></i>
+                                                        </a>
+                                                        <a href="wishlist.html" class="single-btn">
+                                                            <i class="fas fa-heart"></i>
+                                                        </a>
+                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#quickModal"
+                                                            class="single-btn">
+                                                            <i class="fas fa-eye"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="price-block">
+                                                @if ($book->price_sale != 0)
+                                                    <span class="price">{{ number_format($book->price_sale) }} đ</span>
+                                                    <del class="price-old">{{ number_format($book->price) }} đ</del>
+                                                    <span class="price-discount">{{ ceil((1 - ($book->price_sale/$book->price))*100) }} %</span>
+                                                @else
+                                                    <span class="price">{{ number_format($book->price) }} đ</span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                            {{-- <div class="single-slide">
                                 <div class="product-card">
                                     <div class="product-header">
                                         <a href="#" class="author">
@@ -692,9 +742,10 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
+
                     <div class="tab-pane" id="men" role="tabpanel" aria-labelledby="men-tab">
                         <div class="product-slider multiple-row  slider-border-multiple-row  sb-slick-slider"
                             data-slick-setting='{
@@ -3080,3 +3131,7 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    
+@endpush
