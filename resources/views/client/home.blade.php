@@ -184,7 +184,7 @@
                             {"breakpoint":320, "settings": {"slidesToShow": 1} }
                         ]'>
                             @foreach ($books as $book)
-                                <div class="single-slide px-2">
+                                <div class="single-slide">
                                     <div class="product-card">
                                         <div class="product-header">
                                             <a href="#" class="author">
@@ -201,9 +201,16 @@
                                                             alt="">
                                                     </a>
                                                     <div class="hover-btns">
-                                                        <a href="cart.html" class="single-btn">
+                                                        @if (Auth::check())
+                                                            <button class="single-btn" onclick="addToCart(true, {{ $book->id }})">
+                                                        @else
+                                                            <button class="single-btn" onclick="addToCart(false, {{ $book->id }})">
+                                                        @endif
                                                             <i class="fas fa-shopping-basket"></i>
-                                                        </a>
+                                                        </button>
+                                                        {{-- <a href="cart.html" class="single-btn">
+                                                            <i class="fas fa-shopping-basket"></i>
+                                                        </a> --}}
                                                         <a href="wishlist.html" class="single-btn">
                                                             <i class="fas fa-heart"></i>
                                                         </a>
@@ -3133,5 +3140,48 @@
 @endsection
 
 @push('scripts')
-    
+    <script type="text/javascript">
+        $.ajaxSetup({
+            headers:{
+                'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+            }
+        })
+
+        toastr.options.progressBar = true;
+        toastr.options.closeButton = true;
+        toastr.options.showEasing = 'swing';
+        
+        const cartQuantity = document.querySelector('#cart-quantity');
+
+        function addToCart(isAuthenticated, id, quantity = 1) {
+            if (!isAuthenticated) {
+                Swal.fire({
+                    text: 'Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng',
+                    icon: 'warning',
+                    confirmButtonText: 'Đăng nhập',
+                    showCloseButton: true,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location = "http://127.0.0.1:8000/login";
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: "/cart/store",
+                    type: "POST",
+                    data: {
+                        id,
+                        quantity
+                    },
+                    dataType: "json",
+                    success: function(data) {
+                        if (data.status == 'success')  {
+                            cartQuantity.innerText = data.cartQuantity;
+                            toastr.success('Sản phẩm đã được thêm vào giỏ hàng');
+                        }
+                    }
+                });
+            }
+        }
+    </script>
 @endpush

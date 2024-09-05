@@ -24,6 +24,22 @@
     @include('client.partrials.script')
     <!-- End: Script -->
 
+    <script type="text/javascript">
+        const cartNotLogin = document.querySelector('#cartNotLogin');
+        cartNotLogin.addEventListener("click", function() {
+            Swal.fire({
+                text: 'Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng',
+                icon: 'warning',
+                confirmButtonText: 'Đăng nhập',
+                showCloseButton: true,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location = "http://127.0.0.1:8000/login";
+                }
+            });
+        });
+    </script>
+
     <!-- Start: Custom script -->
     @stack('scripts')
     <!-- End: Custom script -->

@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('book_id')->constrained('books')->onUpdate('cascade')->onDelete('cascade');
-            $table->string('name');
-            $table->string('thumbnail');
-            $table->integer('price');
-            $table->integer('price_sale');
+            // $table->string('name');
+            // $table->string('thumbnail');
+            // $table->integer('price');
+            // $table->integer('price_sale');
             $table->integer('quantity');
             $table->timestamps();
         });

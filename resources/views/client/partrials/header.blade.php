@@ -263,8 +263,8 @@
                             @guest
                                 <div class="login-block">
                                     <div class="dropdown">
-                                        <button class="p-2 dropdown-toggle" type="button"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                        <button class="p-2 dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                            aria-expanded="false">
                                             <i class="fa-regular fa-user fs-4"></i>
                                         </button>
                                         <ul class="dropdown-menu rounded-0 py-0">
@@ -277,14 +277,17 @@
                             @auth
                                 <div class="login-block">
                                     <div class="dropdown">
-                                        <button class="p-2 dropdown-toggle" type="button"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
-                                            <img src="{{ Storage::url(Auth::user()->avatar) }}" alt="" class="rounded-circle" width="40px">
+                                        <button class="p-2 dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                            aria-expanded="false">
+                                            <img src="{{ Storage::url(Auth::user()->avatar) }}" alt=""
+                                                class="rounded-circle" width="40px">
                                         </button>
                                         <ul class="dropdown-menu rounded-0 py-0">
-                                            <li><a class="dropdown-item" href="{{ route('profile.index') }}">Chỉnh sửa thông tin</a></li>
+                                            <li><a class="dropdown-item" href="{{ route('profile.index') }}">Chỉnh sửa
+                                                    thông tin</a></li>
                                             <li><a class="dropdown-item" href="">Sản phẩm yêu thích</a></li>
-                                            <li><a class="dropdown-item" href="{{ route('profile.myOrders') }}">Đơn hàng của tôi</a></li>
+                                            <li><a class="dropdown-item" href="{{ route('profile.myOrders') }}">Đơn hàng
+                                                    của tôi</a></li>
                                             <li><a class="dropdown-item" href="">Đổi mật khẩu</a></li>
                                             <li>
                                                 <form method="POST" action="{{ route('logout') }}" class="mb-0">
@@ -296,45 +299,24 @@
                                     </div>
                                 </div>
                             @endauth
-                            <div class="cart-block">
-                                <div class="cart-total">
-                                    <span class="text-number">
-                                        1
-                                    </span>
-                                    <span class="text-item">
-                                        Shopping Cart
-                                    </span>
-                                    <span class="price">
-                                        £0.00
-                                        <i class="fas fa-chevron-down"></i>
-                                    </span>
+                            @auth
+                                <div class="position-relative">
+                                    <a href="{{ route('cart.index') }}">
+                                        <i class="fa-solid fa-cart-shopping fs-3" style="color: #62ab00"></i>
+                                    </a>
+                                    <span class="d-inline-block position-absolute px-1 bg-danger rounded text-white fw-bold translate-middle" id="cart-quantity">0</span>
                                 </div>
-                                <div class="cart-dropdown-block">
-                                    <div class=" single-cart-block ">
-                                        <div class="cart-product">
-                                            <a href="product-details.html" class="image">
-                                                <img src="{{ asset('client/assets') }}/image/products/cart-product-1.jpg"
-                                                    alt="">
-                                            </a>
-                                            <div class="content">
-                                                <h3 class="title"><a href="product-details.html">Kodak PIXPRO
-                                                        Astro Zoom AZ421 16 MP</a>
-                                                </h3>
-                                                <p class="price"><span class="qty">1 ×</span> £87.34</p>
-                                                <button class="cross-btn"><i class="fas fa-times"></i></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class=" single-cart-block ">
-                                        <div class="btn-block">
-                                            <a href="cart.html" class="btn">View Cart <i
-                                                    class="fas fa-chevron-right"></i></a>
-                                            <a href="checkout.html" class="btn btn--primary">Check Out <i
-                                                    class="fas fa-chevron-right"></i></a>
-                                        </div>
-                                    </div>
+                            @endauth
+
+                            @guest
+                                <div class="position-relative">
+                                    <a href="#" id="cartNotLogin">
+                                        <i class="fa-solid fa-cart-shopping fs-3" style="color: #62ab00"></i>
+                                    </a>
+                                    <span
+                                        class="d-inline-block position-absolute px-1 bg-danger rounded text-white fw-bold translate-middle">0</span>
                                 </div>
-                            </div>
+                            @endguest
                         </div>
                     </div>
                 </div>

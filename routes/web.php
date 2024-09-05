@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\PublisherController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Client\AuthController as ClientAuthController;
+use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Client\ProfileController as ClientProfileController;
 use Illuminate\Support\Facades\Route;
@@ -84,6 +85,11 @@ Route::post('/logout', [ClientAuthController::class, 'logout'])->name('logout');
 
 Route::get('/profile', [ClientProfileController::class, 'index'])->name('profile.index');
 Route::get('/profile/my-orders', [ClientProfileController::class, 'myOrders'])->name('profile.myOrders');
+
+Route::get('/gio-hang', [CartController::class, 'index'])->name('cart.index');
+Route::post('/cart/store', [CartController::class, 'store'])->name('cart.store');
+
+
 
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {

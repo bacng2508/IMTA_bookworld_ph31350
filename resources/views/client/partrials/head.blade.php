@@ -8,9 +8,18 @@
     <link rel="stylesheet" type="text/css" media="screen" href="{{asset('client/assets')}}/css/main.css" />
     <link rel="shortcut icon" type="{{asset('client/assets')}}/image/x-icon" href="{{asset('client/assets')}}/image/favicon.ico">
 
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     {{-- Font awesome --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
+    {{-- Sweet alert --}}
+    <script src="{{asset("client")}}/assets/js/sweetalert2.all.min.js"></script>
+
+
+    {{-- Toastr --}}
+	<link rel="stylesheet" href="{{asset("client")}}/assets/css/toastr.min.css">
+
     <!-- Start: Custom style -->
     @stack('styles')
     <!-- End: Custom style -->

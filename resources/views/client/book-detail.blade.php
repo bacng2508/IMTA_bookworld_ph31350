@@ -130,10 +130,16 @@
                         <div class="add-to-cart-row">
                             <div class="count-input-block">
                                 <span class="widget-label">Số lượng</span>
-                                <input type="number" class="form-control text-center" value="1">
+                                <input type="number" class="form-control text-center" value="1" id="quantity-to-add" >
                             </div>
+                            
                             <div class="add-cart-btn">
-                                <a href="#" class="btn btn-outlined--primary"><span class="plus-icon">+</span>Thêm vào giỏ hàng</a>
+                                @if (Auth::check())
+                                    <button class="btn btn-outlined--primary" onclick="addToCart(true, {{ $book->id }})"><span class="plus-icon">+</span>Thêm vào giỏ hàng</button>
+                                @else
+                                    <button class="btn btn-outlined--primary" onclick="addToCart(false, {{ $book->id }})"><span class="plus-icon">+</span>Thêm vào giỏ hàng</button>
+                                @endif
+                                
                             </div>
                         </div>
                         <div class="compare-wishlist-row">
@@ -624,4 +630,53 @@
 @endsection
 
 @push('scripts')
+    <script type="text/javascript">
+        $.ajaxSetup({
+            headers:{
+                'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+            }
+        })
+
+        toastr.options.progressBar = true;
+        toastr.options.closeButton = true;
+        toastr.options.showEasing = 'swing';
+        
+        const cartQuantity = document.querySelector('#cart-quantity');
+        const quantityToAdd = document.getElementById('quantity-to-add');
+        // console.log(quantityToAdd)
+        // quantityToAdd.addEventListener('input', () => {
+        //     console.log(quantityToAdd.value);
+        // });
+
+        function addToCart(isAuthenticated, id, quantity = 1) {
+            if (!isAuthenticated) {
+                Swal.fire({
+                    text: 'Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng',
+                    icon: 'warning',
+                    confirmButtonText: 'Đăng nhập',
+                    showCloseButton: true,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location = "http://127.0.0.1:8000/login";
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: "/cart/store",
+                    type: "POST",
+                    data: {
+                        id,
+                        quantity: quantityToAdd.value
+                    },
+                    dataType: "json",
+                    success: function(data) {
+                        if (data.status == 'success')  {
+                            cartQuantity.innerText = data.cartQuantity;
+                            toastr.success('Sản phẩm đã được thêm vào giỏ hàng');
+                        }
+                    }
+                });
+            }
+        }
+    </script>
 @endpush
